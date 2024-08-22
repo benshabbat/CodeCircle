@@ -2,9 +2,9 @@ import User from "../model/User";
 import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 export const register = async (req, res) => {
-  const { firstName,lastName, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   try {
-    if (!firstName || !lastName ||!email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       throw new Error("all fields are required");
     }
 
@@ -20,8 +20,8 @@ export const register = async (req, res) => {
       100000 + Math.random() * 900000
     ).toString();
     const newUser = new User({
-        firstName,
-        lastName,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
       verificationToken,
