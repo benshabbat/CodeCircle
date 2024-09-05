@@ -18,8 +18,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required:true,
   },
-  langueges: {[{ type: String }],
-  required:true}
+  languages: {[{ type: String }],
+  projects:{[{ type: String]}
 });
 
 const User = mongoose.model("User", UserSchema);
