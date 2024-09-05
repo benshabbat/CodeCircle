@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required:true,
   },
-  skills: {[{ type: String }],
+  langueges: {[{ type: String }],
   required:true}
 });
 
