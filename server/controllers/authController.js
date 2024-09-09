@@ -11,14 +11,22 @@ export const register = async (req, res) => {
   // if(userExist) return createError /// TODO: to use with function of createError
 
   if (userExist) {
-    return res.status(409)
+    return res
+      .status(409)
       .json({ success: false, message: "User already exists" });
   }
 
   //hash for password with bcrypt algorithm
-  const hashedPassword = await bcrypt.hash(password,12)
+  const hashedPassword = await bcrypt.hash(password, 12);
 
+  const newUser = User({
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+  });
 
+  await newUser.save();
 };
 export const login = (req, res) => {
   console.log(res.data);
