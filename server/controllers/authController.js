@@ -3,6 +3,9 @@ import bcryptjs from "bcryptjs";
 // import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 // import { createError } from "../utils/error.js";
 
+
+
+//TODO: to add jwt
 export const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -31,7 +34,7 @@ export const register = async (req, res) => {
   res.status(201).json({firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, password: newUser.password});
 };
 
-
+//TODO: to add jwt and cookie parser
 export const login = async(req, res) => {
   const {email, password} = req.body;
   const user = await User.findOne({email});
