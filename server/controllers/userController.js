@@ -13,6 +13,12 @@ export const updateUser = async(req,res)=>{
 
     res.status(200).json(updateUser); 
 }
+
 //DELETE
+export const deleteUser = async(req,res)=>{
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json({message:"deleted successfully"}); 
+
+}
 //GET
 //GET ALL
