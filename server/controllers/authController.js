@@ -1,7 +1,7 @@
 import User from "../model/User.js";
 import bcryptjs from "bcryptjs";
-import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
-import { createError } from "../utils/error.js";
+// import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
+// import { createError } from "../utils/error.js";
 
 export const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -17,7 +17,7 @@ export const register = async (req, res) => {
   }
 
   //hash for password with bcrypt algorithm
-  const hashedPassword = await bcrypt.hash(password, 12);
+  const hashedPassword = await bcryptjs.hash(password, 12);
 
   const newUser = User({
     firstName,
@@ -27,10 +27,19 @@ export const register = async (req, res) => {
   });
 
   await newUser.save();
+
+  res.status(201).json({firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, password: newUser.password});
 };
-export const login = (req, res) => {
-  console.log(res.data);
+
+
+export const login = async(req, res) => {
+  const {email, password} = req.body;
+  const user = await User.findOne({email});
+  res.json(user);
 };
+
+
+
 export const logout = (req, res) => {
   console.log(res.data);
 };

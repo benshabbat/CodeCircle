@@ -18,8 +18,8 @@ const UserSchema = new Schema({
     type: String,
     required:true,
   },
-  languages: {[{ type: String }],
-  projects:{[{ type: String]}
+  languages: [{ type: String }],
+  projects:[{ type: String}]
 });
 
 const User = model("User", UserSchema);
