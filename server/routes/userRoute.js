@@ -1,10 +1,9 @@
 import express from "express";
+import { updateUser } from "../controllers/userController.js";
 const router = express.Router();
 
 //TODO:
-router.get("/", (req, res) => {
-  res.send("test");
-});
+router.put("/:id", updateUser);
 //UPDATE
 //DELETE
 //GET
