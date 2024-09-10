@@ -25,3 +25,7 @@ export const getUser = async (req, res) => {
     res.status(200).json(user);
 }
 //GET ALL
+export const getUsers = async (req, res) => {
+    const users = await User.find();
+    res.status(200).json(users);
+}
