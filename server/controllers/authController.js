@@ -1,9 +1,8 @@
 import User from "../model/User.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 // import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 // import { createError } from "../utils/error.js";
-
-
 
 //TODO: to add jwt
 export const register = async (req, res) => {
@@ -31,25 +30,41 @@ export const register = async (req, res) => {
 
   await newUser.save();
 
-  res.status(201).json({firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, password: newUser.password});
+  res.status(201).json({
+    firstName: newUser.firstName,
+    lastName: newUser.lastName,
+    email: newUser.email,
+    password: newUser.password,
+  });
 };
 
 //TODO: to add jwt and cookie parser
-export const login = async(req, res) => {
-  const {email, password} = req.body;
-  const user = await User.findOne({email});
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-  if(!user){
-    res.status(401).json({ success: false, message: "User not found" });
+    if (!user) {
+      res.status(401).json({ success: false, message: "User not found" });
+    }
+    const isPassword = await bcryptjs.compare(password, user.password);
+    if (!isPassword) {
+      res
+        .status(401)
+        .json({ success: false, message: "Email or password is wrong" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT);
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .json(user);
+  } catch (error) {
+    res.status(500).json(error);
   }
-  const isPassword = await bcryptjs.compare(password,user.password)
-  if(!isPassword) {res.status(401).json({ success: false, message: "Email or password is wrong" });}
-
-  
-  res.json(user);
 };
-
-
 
 export const logout = (req, res) => {
   console.log(res.data);
