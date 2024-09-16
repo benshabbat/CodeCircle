@@ -31,10 +31,7 @@ export const register = async (req, res) => {
 
   // await newUser.save();
   res.status(201).json({
-    firstName: newUser.firstName,
-    lastName: newUser.lastName,
-    email: newUser.email,
-    password: newUser.password,
+    newUser
   });
 };
 
