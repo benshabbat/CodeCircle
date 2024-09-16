@@ -2,7 +2,7 @@ import express from "express";
 import { updateUser,deleteUser,getUser,getUsers } from "../controllers/userController.js";
 const router = express.Router();
 
-//TODO:
+
 //UPDATE
 router.put("/:id", updateUser);
 //DELETE

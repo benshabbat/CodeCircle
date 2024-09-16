@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from './config/db.js';
 import userRoutes from "./routes/userRoute.js";
 import authRoutes from "./routes/authRoute.js";
+import projectRoute from "./routes/projectRoute.js";
 import cookieParser from "cookie-parser"
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/project", projectRoute);
 
 
 //TODO: NEXT MIDDLEWARE MESSAGE ERROR
