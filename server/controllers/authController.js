@@ -1,10 +1,12 @@
 import User from "../model/User.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+
+
 // import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 // import { createError } from "../utils/error.js";
 
-//TODO: to add jwt
+
 export const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -17,19 +19,17 @@ export const register = async (req, res) => {
       .status(409)
       .json({ success: false, message: "User already exists" });
   }
-
   //hash for password with bcrypt algorithm
   const hashedPassword = await bcryptjs.hash(password, 12);
 
-  const newUser = User({
+  const newUser = await User.create({
     firstName,
     lastName,
     email,
     password: hashedPassword,
   });
 
-  await newUser.save();
-
+  // await newUser.save();
   res.status(201).json({
     firstName: newUser.firstName,
     lastName: newUser.lastName,
@@ -38,7 +38,7 @@ export const register = async (req, res) => {
   });
 };
 
-//TODO: to add jwt and cookie parser
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -67,5 +67,11 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  console.log(res.data);
+  res
+  .clearCookie("access_token", {
+    sameSite: "none",
+    secure: true,
+  })
+  .status(200)
+  .send("User has been logged out.");
 };
