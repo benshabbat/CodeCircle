@@ -17,6 +17,9 @@ app.use(cors());
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 
+
+//TODO: NEXT MIDDLEWARE MESSAGE ERROR
+
 app.use((req,res,next)=>{
     console.log("check")
 })
